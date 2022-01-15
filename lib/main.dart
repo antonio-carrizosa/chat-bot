@@ -1,3 +1,5 @@
+import 'package:chat_bot/presentation/home_screen.dart';
+import 'package:chat_bot/router.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -9,14 +11,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'ChatBot',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Scaffold(
-        body: Center(
-            child: Image.asset("assets/png/undraw_Chatting_re_j55r.png")),
-      ),
+      initialRoute: HomeScreen.routeName,
+      onGenerateRoute: onGenerateRoute,
     );
   }
 }
