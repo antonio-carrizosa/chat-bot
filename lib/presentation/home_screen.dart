@@ -12,13 +12,12 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        // backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: false,
         title: Text(
           'ChatBot',
           style: TextStyle(
-            color: Theme.of(context).primaryColor,
             fontSize: 30,
           ),
         ),

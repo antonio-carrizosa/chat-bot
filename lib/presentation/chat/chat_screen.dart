@@ -1,7 +1,9 @@
+import 'package:chat_bot/core/models/message.dart';
 import 'package:chat_bot/presentation/chat/widgets/message_builder.dart';
 import 'package:chat_bot/presentation/chat/widgets/message_list.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:uuid/uuid.dart';
 
 class ChatScreen extends StatelessWidget {
   static const String routeName = "/chat";
@@ -15,7 +17,16 @@ class ChatScreen extends StatelessWidget {
           children: [
             _AppBarContent(),
             MessageList(),
-            MessageBuilder(),
+            MessageBuilder(
+              onMessage: (String msg) {
+                final message = Message(
+                    uid: Uuid().v4(),
+                    sender: 'sender',
+                    message: msg,
+                    createdAt: DateTime.now().millisecondsSinceEpoch);
+                print(message);
+              },
+            ),
           ],
         ),
       ),
