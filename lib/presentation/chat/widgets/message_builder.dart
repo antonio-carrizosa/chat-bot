@@ -86,7 +86,7 @@ class _MessageInput extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
           color: Theme.of(context).primaryColor,
-          borderRadius: BorderRadius.circular(100)),
+          borderRadius: BorderRadius.circular(25)),
       child: TextFormField(
         autofocus: true,
         controller: controller,

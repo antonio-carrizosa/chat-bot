@@ -1,8 +1,11 @@
+import 'package:chat_bot/application/chat/chat_provider.dart';
 import 'package:chat_bot/core/models/message.dart';
+import 'package:chat_bot/core/models/user.dart';
 import 'package:chat_bot/presentation/chat/widgets/message_builder.dart';
 import 'package:chat_bot/presentation/chat/widgets/message_list.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
 class ChatScreen extends StatelessWidget {
@@ -11,20 +14,26 @@ class ChatScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final currentUser = Provider.of<User>(context);
+
     return Scaffold(
       body: Container(
         child: Column(
           children: [
             _AppBarContent(),
-            MessageList(),
+            MessageList(
+              messages: Provider.of<ChatProvider>(context).messages,
+              currentUser: currentUser,
+            ),
             MessageBuilder(
               onMessage: (String msg) {
                 final message = Message(
                     uid: Uuid().v4(),
-                    sender: 'sender',
+                    sender: currentUser.uid,
                     message: msg,
                     createdAt: DateTime.now().millisecondsSinceEpoch);
-                print(message);
+                Provider.of<ChatProvider>(context, listen: false)
+                    .sendMessage(message);
               },
             ),
           ],
