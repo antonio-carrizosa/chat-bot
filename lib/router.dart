@@ -2,12 +2,12 @@ import 'package:chat_bot/presentation/chat/chat_screen.dart';
 import 'package:chat_bot/presentation/common/error_page_screen.dart';
 import 'package:flutter/material.dart';
 
-import 'presentation/home_screen.dart';
+import 'presentation/main_screen.dart';
 
 Route<dynamic>? onGenerateRoute(RouteSettings settings) {
   switch (settings.name) {
-    case HomeScreen.routeName:
-      return MaterialPageRoute(builder: (_) => HomeScreen());
+    case MainScreen.routeName:
+      return MaterialPageRoute(builder: (_) => MainScreen());
     case ChatScreen.routeName:
       return PageRouteBuilder(
         pageBuilder: (context, animation, secondaryAnimation) {

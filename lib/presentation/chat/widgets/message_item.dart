@@ -23,9 +23,7 @@ class MessageItem extends StatelessWidget {
             width: MediaQuery.of(context).size.width * 0.7,
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-                color: isMe
-                    ? Colors.grey.shade900
-                    : Theme.of(context).primaryColor,
+                color: isMe ? Colors.green : Theme.of(context).primaryColor,
                 borderRadius: isMe
                     ? const BorderRadius.only(
                         topLeft: Radius.circular(20),
@@ -55,8 +53,11 @@ class MessageItem extends StatelessWidget {
                       ),
                     ),
                     if (isMe)
-                      Icon(Ionicons.checkmark_done,
-                          color: message.readed ? Colors.blue : Colors.white70,
+                      Icon(
+                          message.readed
+                              ? Ionicons.checkmark_done
+                              : Ionicons.checkmark,
+                          color: Colors.white70,
                           size: 18),
                   ],
                 )

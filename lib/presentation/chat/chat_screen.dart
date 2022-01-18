@@ -30,11 +30,12 @@ class ChatScreen extends StatelessWidget {
             ),
             MessageBuilder(
               onMessage: (String msg) {
+                final timestamp = DateTime.now().millisecondsSinceEpoch;
                 final message = Message(
                     uid: Uuid().v4(),
                     sender: currentUser.uid,
                     message: msg,
-                    createdAt: DateTime.now().millisecondsSinceEpoch);
+                    createdAt: timestamp);
                 Provider.of<ChatProvider>(context, listen: false)
                     .sendMessage(message);
               },

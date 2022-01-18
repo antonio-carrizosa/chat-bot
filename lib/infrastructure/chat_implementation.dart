@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:chat_bot/core/models/user.dart';
 import 'package:chat_bot/core/models/message.dart';
 import 'package:chat_bot/core/repository/chat_repository.dart';
+import 'package:uuid/uuid.dart';
 
 class ChatImplementation implements ChatRepository {
   final _chatbot = User(uid: 'R2D2', name: 'chatbot', isBot: true);
@@ -26,8 +27,8 @@ class ChatImplementation implements ChatRepository {
 
     _messageStream.add(
       Message(
+          uid: Uuid().v4(),
           createdAt: DateTime.now().millisecondsSinceEpoch,
-          uid: _chatbot.uid,
           message: "Hi there! \nHow can i help you?",
           sender: _chatbot.uid),
     );
@@ -46,10 +47,10 @@ class ChatImplementation implements ChatRepository {
       _messageStream.add(message.copyWith(readed: true));
       _botStream.sink.add(_chatbot.copyWith(isTyping: true));
     });
-    _getReply();
+    _reply();
   }
 
-  void _getReply() {
+  void _reply() {
     _replyTimer?.cancel();
     _replyTimer = Timer(Duration(seconds: _generateRandom(2, 5)), () {
       String? response;
@@ -57,11 +58,13 @@ class ChatImplementation implements ChatRepository {
         response = _responses[_generateRandom(0, _responses.length - 1)];
       }
       final timestamp = DateTime.now().millisecondsSinceEpoch;
-      _messageStream.add(Message(
-          uid: timestamp.toString(),
-          sender: _chatbot.uid,
-          message: response,
-          createdAt: timestamp));
+      _messageStream.add(
+        Message(
+            uid: Uuid().v4(),
+            sender: _chatbot.uid,
+            message: response,
+            createdAt: timestamp),
+      );
       _botStream.sink.add(_chatbot.copyWith(isTyping: false));
     });
   }
