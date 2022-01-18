@@ -16,8 +16,7 @@ class MessageList extends StatelessWidget {
     return Expanded(
         flex: 1,
         child: Container(
-          color: Colors.white,
-          padding: const EdgeInsets.all(8),
+          padding: const EdgeInsets.symmetric(horizontal: 8),
           child: ListView(
             physics: BouncingScrollPhysics(),
             reverse: true,

@@ -17,10 +17,13 @@ class ChatScreen extends StatelessWidget {
     final currentUser = Provider.of<User>(context);
 
     return Scaffold(
+      backgroundColor: Colors.grey.shade300,
       body: Container(
         child: Column(
           children: [
-            _AppBarContent(),
+            _AppBarContent(
+              isTyping: Provider.of<ChatProvider>(context).isBotTyping,
+            ),
             MessageList(
               messages: Provider.of<ChatProvider>(context).messages,
               currentUser: currentUser,
@@ -44,14 +47,15 @@ class ChatScreen extends StatelessWidget {
 }
 
 class _AppBarContent extends StatelessWidget {
-  const _AppBarContent({
-    Key? key,
-  }) : super(key: key);
+  final bool isTyping;
+
+  const _AppBarContent({Key? key, this.isTyping = false}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(8),
+      height: 90,
       color: Theme.of(context).primaryColor,
       child: SafeArea(
         child: Row(
@@ -64,14 +68,16 @@ class _AppBarContent extends StatelessWidget {
             const SizedBox(width: 8),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Text("Chatbot",
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 20,
                         fontWeight: FontWeight.bold)),
-                Text("Typing...",
-                    style: TextStyle(color: Colors.white60, fontSize: 14)),
+                if (isTyping)
+                  Text("Typing...",
+                      style: TextStyle(color: Colors.white60, fontSize: 14)),
               ],
             ),
           ],
