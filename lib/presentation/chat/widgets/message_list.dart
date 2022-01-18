@@ -14,19 +14,18 @@ class MessageList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-        flex: 1,
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 8),
-          child: ListView(
-            physics: BouncingScrollPhysics(),
-            reverse: true,
-            children: messages.reversed
-                .map((m) => MessageItem(
-                      message: m,
-                      isMe: currentUser.uid == m.sender,
-                    ))
-                .toList(),
-          ),
-        ));
+        child: Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      child: ListView(
+        physics: BouncingScrollPhysics(),
+        reverse: true,
+        children: messages.reversed
+            .map((m) => MessageItem(
+                  message: m,
+                  isMe: currentUser.uid == m.sender,
+                ))
+            .toList(),
+      ),
+    ));
   }
 }

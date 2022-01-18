@@ -34,16 +34,21 @@ class _MessageBuilderState extends State<MessageBuilder> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(8),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          _MessageInput(controller: _controller),
-          _SendButton(
-            onPressed: () => sendMessage(_controller.text.trim()),
-          ),
-        ],
+    return SafeArea(
+      top: false,
+      bottom: true,
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            _MessageInput(controller: _controller),
+            _SendButton(
+              onPressed: () => sendMessage(_controller.text.trim()),
+            ),
+          ],
+        ),
       ),
     );
   }

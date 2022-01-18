@@ -20,17 +20,17 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
   late ChatProvider chatProvider;
-  late NotifycationRepository notificationService;
+  late NotifycationRepository notificationRepository;
 
   @override
   void initState() {
     chatProvider = Provider.of<ChatProvider>(context, listen: false);
-    notificationService =
+    notificationRepository =
         Provider.of<NotifycationRepository>(context, listen: false);
-    notificationService
+    notificationRepository
       ..isNotificationAllowed().then((isAllowed) {
         if (!isAllowed) {
-          _requestPermision(notificationService);
+          _requestPermision();
         }
       })
       ..actionStream.listen(_handleAction);
@@ -48,12 +48,12 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
     }
   }
 
-  Future<void> _requestPermision(NotifycationRepository notificationService) {
+  Future<void> _requestPermision() {
     return showDialog(
       context: context,
       builder: (context) => showAllowNotificationsDialog(
         allow: () async {
-          notificationService
+          notificationRepository
               .requestPermission()
               .then((_) => Navigator.pop(context));
         },
@@ -65,10 +65,10 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
   void _handleAction(ReceivedAction action) async {
     if (action.channelKey == NotificationImplementation.CHANNEL_KEY &&
         Platform.isIOS) {
-      notificationService.decrementiOSBadge();
+      notificationRepository.decrementiOSBadge();
     }
     if (action.channelKey == NotificationImplementation.CHANNEL_KEY) {
-      if (!Navigator.of(context).isCurrent(ChatScreen.routeName)) {
+      if (Navigator.of(context).isCurrent(ChatScreen.routeName)) {
         await Navigator.pushNamedAndRemoveUntil(
             context, ChatScreen.routeName, (route) => route.isFirst);
         chatProvider.createNotification = true;
@@ -78,7 +78,7 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
 
   @override
   void dispose() {
-    notificationService.closeSink();
+    notificationRepository.closeSink();
     super.dispose();
   }
 

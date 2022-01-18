@@ -4,7 +4,7 @@ showAllowNotificationsDialog({
   required void Function() allow,
   required void Function() denie,
 }) {
-  AlertDialog(
+  return AlertDialog(
     title: Text('Allow Notifications'),
     content: Text('Our app would like to send you notifications.'),
     actions: [
@@ -15,7 +15,7 @@ showAllowNotificationsDialog({
             style: TextStyle(color: Colors.grey, fontSize: 18),
           )),
       TextButton(
-          onPressed: () => allow,
+          onPressed: allow,
           child: Text(
             'Allow',
             style: TextStyle(
