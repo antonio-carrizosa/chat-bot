@@ -1,9 +1,7 @@
-import 'package:chat_bot/application/chat/chat_provider.dart';
 import 'package:chat_bot/presentation/chat/chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -24,14 +22,8 @@ class HomeScreen extends StatelessWidget {
       ),
       body: _Content(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          final chatProvider =
-              Provider.of<ChatProvider>(context, listen: false);
-          chatProvider.createNotification = false;
-          await Navigator.pushNamedAndRemoveUntil(
-              context, ChatScreen.routeName, (route) => route.isFirst);
-          chatProvider.createNotification = true;
-        },
+        onPressed: () => Navigator.pushNamedAndRemoveUntil(
+            context, ChatScreen.routeName, (route) => route.isFirst),
         isExtended: true,
         child: Padding(
           padding: const EdgeInsets.all(8.0),

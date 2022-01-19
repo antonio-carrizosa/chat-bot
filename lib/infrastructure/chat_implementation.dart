@@ -6,7 +6,18 @@ import 'package:chat_bot/core/repository/chat_repository.dart';
 import 'package:uuid/uuid.dart';
 
 class ChatImplementation implements ChatRepository {
-  final _chatbot = User(uid: 'R2D2', name: 'chatbot', isBot: true);
+  final _chatbot = User.chatbot;
+
+  ChatImplementation() {
+    _messageStream.add(
+      Message(
+          uid: Uuid().v4(),
+          createdAt: DateTime.now().millisecondsSinceEpoch,
+          message: "Hi there! \nHow can i help you?",
+          sender: _chatbot.uid),
+    );
+    _botStream.add(_chatbot);
+  }
 
   final List<String> _responses = [
     "Ok, lets see what can i do for you!",
@@ -21,18 +32,7 @@ class ChatImplementation implements ChatRepository {
   StreamController<Message> _messageStream = StreamController<Message>();
   StreamController<User> _botStream = StreamController<User>();
   Timer? _replyTimer;
-
-  ChatImplementation() {
-    _botStream.sink.add(_chatbot);
-
-    _messageStream.add(
-      Message(
-          uid: Uuid().v4(),
-          createdAt: DateTime.now().millisecondsSinceEpoch,
-          message: "Hi there! \nHow can i help you?",
-          sender: _chatbot.uid),
-    );
-  }
+  bool initialized = false;
 
   @override
   Stream<User> onBotStateChange() => _botStream.stream;

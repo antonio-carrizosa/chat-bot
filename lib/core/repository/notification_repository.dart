@@ -1,10 +1,8 @@
-import 'package:awesome_notifications/awesome_notifications.dart';
-
-abstract class NotifycationRepository {
+abstract class NotificationRepository {
   Future<void> createNotification(String title, String body);
   Future<bool> isNotificationAllowed();
   Future<void> requestPermission();
-  Stream<ReceivedAction> get actionStream;
+  Stream<String> get actionChannelKeyStream;
   void closeSink();
   void decrementiOSBadge();
 }

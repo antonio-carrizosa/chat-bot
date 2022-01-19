@@ -1,4 +1,7 @@
 class User {
+  static final User chatbot = User(uid: 'R2D2', name: 'Chatbot', isBot: true);
+  static final currentUser = User(uid: '007', name: 'John Doe');
+
   final String uid;
   final String name;
   final bool isBot;

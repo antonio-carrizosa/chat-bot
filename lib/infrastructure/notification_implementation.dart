@@ -2,7 +2,7 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:chat_bot/core/repository/notification_repository.dart';
 import 'package:flutter/material.dart';
 
-class NotificationImplementation implements NotifycationRepository {
+class NotificationImplementation implements NotificationRepository {
   static const String CHANNEL_KEY = "chat_channel";
   late AwesomeNotifications _awesomeNotifications;
 
@@ -41,7 +41,9 @@ class NotificationImplementation implements NotifycationRepository {
       _awesomeNotifications.requestPermissionToSendNotifications();
 
   @override
-  Stream<ReceivedAction> get actionStream => _awesomeNotifications.actionStream;
+  Stream<String> get actionChannelKeyStream =>
+      _awesomeNotifications.actionStream
+          .map((action) => action.channelKey ?? '');
 
   @override
   void decrementiOSBadge() {
