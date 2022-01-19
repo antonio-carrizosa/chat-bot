@@ -2,13 +2,20 @@ import 'package:chat_bot/core/models/message.dart';
 import 'package:chat_bot/core/models/user.dart';
 import 'package:chat_bot/presentation/chat/widgets/message_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
-class MessageList extends StatelessWidget {
+class MessageList extends HookWidget {
   final User currentUser;
   final List<Message> messages;
+  final void Function(Message message) onSelected;
+  final Message? selectedMessage;
 
   const MessageList(
-      {Key? key, required this.messages, required this.currentUser})
+      {Key? key,
+      required this.messages,
+      required this.currentUser,
+      required this.onSelected,
+      this.selectedMessage})
       : super(key: key);
 
   @override
@@ -20,10 +27,16 @@ class MessageList extends StatelessWidget {
         physics: BouncingScrollPhysics(),
         reverse: true,
         children: messages.reversed
-            .map((m) => MessageItem(
+            .map(
+              (m) => GestureDetector(
+                onLongPress: () => onSelected(m),
+                child: MessageItem(
                   message: m,
                   isMe: currentUser.uid == m.sender,
-                ))
+                  isSelected: selectedMessage?.uid == m.uid,
+                ),
+              ),
+            )
             .toList(),
       ),
     ));

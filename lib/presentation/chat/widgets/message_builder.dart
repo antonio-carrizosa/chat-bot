@@ -1,39 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:ionicons/ionicons.dart';
 
-class MessageBuilder extends StatefulWidget {
+class MessageBuilder extends HookWidget {
   final void Function(String msg) onMessage;
 
   const MessageBuilder({Key? key, required this.onMessage}) : super(key: key);
 
   @override
-  _MessageBuilderState createState() => _MessageBuilderState();
-}
-
-class _MessageBuilderState extends State<MessageBuilder> {
-  late TextEditingController _controller;
-
-  @override
-  void initState() {
-    _controller = TextEditingController();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  void sendMessage(String msg) {
-    if (msg.isNotEmpty) {
-      widget.onMessage(msg);
-      _controller.clear();
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final controller = useTextEditingController();
+
     return SafeArea(
       top: false,
       bottom: true,
@@ -43,9 +20,15 @@ class _MessageBuilderState extends State<MessageBuilder> {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            _MessageInput(controller: _controller),
+            _MessageInput(controller: controller),
             _SendButton(
-              onPressed: () => sendMessage(_controller.text.trim()),
+              onPressed: () {
+                final msg = controller.text.trim();
+                if (msg.isNotEmpty) {
+                  onMessage(msg);
+                  controller.clear();
+                }
+              },
             ),
           ],
         ),

@@ -4,12 +4,14 @@ class Message {
   final String message;
   final int createdAt;
   final bool readed;
+  final String? reply;
 
   Message(
       {required this.uid,
       required this.sender,
       required this.message,
       required this.createdAt,
+      this.reply,
       this.readed = false});
 
   Message copyWith(
@@ -17,13 +19,15 @@ class Message {
       String? sender,
       String? message,
       int? createdAt,
-      bool? readed}) {
+      bool? readed,
+      String? reply}) {
     return Message(
         uid: uid ?? this.uid,
         sender: sender ?? this.sender,
         message: message ?? this.message,
         readed: readed ?? this.readed,
-        createdAt: createdAt ?? this.createdAt);
+        createdAt: createdAt ?? this.createdAt,
+        reply: reply ?? this.reply);
   }
 
   @override
