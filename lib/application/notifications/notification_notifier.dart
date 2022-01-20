@@ -45,7 +45,7 @@ class NotificationStateNotifier extends StateNotifier<NotificationState> {
   void _handleAction(String channelKey) async {
     if (channelKey == NotificationImplementation.CHANNEL_KEY &&
         Platform.isIOS) {
-      _repository.decrementiOSBadge();
+      await _repository.decrementiOSBadge();
     }
     if (channelKey == NotificationImplementation.CHANNEL_KEY &&
         _canCreatenotifications) {

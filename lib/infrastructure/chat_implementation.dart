@@ -43,7 +43,7 @@ class ChatImplementation implements ChatRepository {
   @override
   void sendMessage(Message message) {
     _messageStream.add(message);
-    Timer(Duration(seconds: _generateRandom(4, 8)), () {
+    Timer(Duration(seconds: _generateRandom(2, 4)), () {
       _messageStream.add(message.copyWith(readed: true));
       if (message.reaction == null)
         _botStream.sink.add(_chatbot.copyWith(isTyping: true));
@@ -55,7 +55,7 @@ class ChatImplementation implements ChatRepository {
 
   void _reply() {
     _replyTimer?.cancel();
-    _replyTimer = Timer(Duration(seconds: _generateRandom(8, 15)), () {
+    _replyTimer = Timer(Duration(seconds: _generateRandom(4, 8)), () {
       String? response;
       while (response == null) {
         response = _responses[_generateRandom(0, _responses.length - 1)];

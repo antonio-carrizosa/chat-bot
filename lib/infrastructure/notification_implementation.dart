@@ -46,9 +46,9 @@ class NotificationImplementation implements NotificationRepository {
           .map((action) => action.channelKey ?? '');
 
   @override
-  void decrementiOSBadge() {
-    _awesomeNotifications.getGlobalBadgeCounter().then(
-        (int value) => _awesomeNotifications.setGlobalBadgeCounter(value - 1));
+  Future<void> decrementiOSBadge() async {
+    final count = await _awesomeNotifications.getGlobalBadgeCounter();
+    await _awesomeNotifications.setGlobalBadgeCounter(count - 1);
   }
 
   @override
