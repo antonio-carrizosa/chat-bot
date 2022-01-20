@@ -11,10 +11,15 @@ class ChatStateNotifier extends StateNotifier<ChatState> {
     repository.onMessageReceived().listen(_handleMessages);
   }
 
-  void _handleMessages(Message message) {
+  void _handleMessages(Message newMessage) {
+    final messages = [
+      ...state.messages.where((m) => m.uid != newMessage.uid),
+      newMessage
+    ];
+    messages.sort((a, b) => a.createdAt.compareTo(b.createdAt));
     state = state.copyWith(
-      messages: [...state.messages.where((m) => m.uid != message.uid), message],
-      newMesage: message,
+      messages: messages,
+      newMesage: newMessage,
     );
   }
 

@@ -34,8 +34,8 @@ class MessageItem extends StatelessWidget {
               ),
               if (message.reaction != null)
                 Positioned(
-                    right: 5,
-                    top: 5,
+                    right: 10,
+                    top: 10,
                     child: Icon(
                       Reaction.getReactionIcon(message.reaction!),
                       color: Reaction.getReactionColor(message.reaction!),

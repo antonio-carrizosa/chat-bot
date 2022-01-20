@@ -10,7 +10,7 @@ Route<dynamic>? onGenerateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (_) => MainScreen());
     case ChatScreen.routeName:
       return PageRouteBuilder(
-        pageBuilder: (context, animation, secondaryAnimation) {
+        pageBuilder: (context, animation, _) {
           final curve =
               CurvedAnimation(parent: animation, curve: Curves.easeIn);
 

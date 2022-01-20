@@ -9,12 +9,14 @@ class MessageList extends HookWidget {
   final List<Message> messages;
   final void Function(Message message) onSelected;
   final Message? selectedMessage;
+  final ScrollController scrollController;
 
   const MessageList(
       {Key? key,
       required this.messages,
       required this.currentUser,
       required this.onSelected,
+      required this.scrollController,
       this.selectedMessage})
       : super(key: key);
 
@@ -25,6 +27,7 @@ class MessageList extends HookWidget {
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: ListView(
         physics: BouncingScrollPhysics(),
+        controller: scrollController,
         reverse: true,
         children: messages.reversed
             .map(
