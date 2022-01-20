@@ -1,4 +1,5 @@
 import 'package:chat_bot/core/models/message.dart';
+import 'package:chat_bot/core/models/reaction.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:ionicons/ionicons.dart';
@@ -22,12 +23,25 @@ class MessageItem extends StatelessWidget {
         mainAxisAlignment:
             isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
         children: [
-          GestureDetector(
-            child: _MessageBubble(
-              isMe: isMe,
-              message: message,
-              isSelected: isSelected,
-            ),
+          Stack(
+            children: [
+              GestureDetector(
+                child: _MessageBubble(
+                  isMe: isMe,
+                  message: message,
+                  isSelected: isSelected,
+                ),
+              ),
+              if (message.reaction != null)
+                Positioned(
+                    right: 5,
+                    top: 5,
+                    child: Icon(
+                      Reaction.getReactionIcon(message.reaction!),
+                      color: Reaction.getReactionColor(message.reaction!),
+                      size: 20,
+                    ))
+            ],
           ),
         ],
       ),
@@ -55,7 +69,7 @@ class _MessageBubble extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
           color: isSelected
-              ? Colors.white54
+              ? Colors.grey.shade600
               : isMe
                   ? Colors.green
                   : Theme.of(context).primaryColor,
@@ -83,9 +97,7 @@ class _MessageBubble extends StatelessWidget {
                 ),
               Text(
                 message.message,
-                style: TextStyle(
-                    color: isSelected ? Colors.black : Colors.white,
-                    fontSize: 16),
+                style: TextStyle(color: Colors.white, fontSize: 16),
               ),
             ],
           ),
@@ -95,16 +107,14 @@ class _MessageBubble extends StatelessWidget {
             children: [
               Text(
                 '${DateFormat.yMMMd().format(timestamp)} ${DateFormat.jm().format(timestamp)}',
-                style: TextStyle(
-                    color: isSelected ? Colors.black : Colors.white70,
-                    fontSize: 12),
+                style: TextStyle(color: Colors.white70, fontSize: 12),
               ),
               if (isMe)
                 Icon(
                     message.readed
                         ? Ionicons.checkmark_done
                         : Ionicons.checkmark,
-                    color: isSelected ? Colors.black : Colors.white70,
+                    color: Colors.white70,
                     size: 18),
             ],
           )

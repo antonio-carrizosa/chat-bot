@@ -53,6 +53,12 @@ class ChatStateNotifier extends StateNotifier<ChatState> {
     );
   }
 
+  void reactToMessage(String reaction) {
+    final message = state.selected!.copyWith(reaction: reaction);
+    repository.sendMessage(message);
+    state = state.copyWith(selected: null);
+  }
+
   void cancelReply() {
     state = state.copyWith(
       reply: null,

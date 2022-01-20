@@ -29,11 +29,11 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_svg: ^0.22.0
   ionicons: ^0.1.2
-  uuid: ^3.0.5  
-  intl: ^0.17.0  
+  uuid: ^3.0.5
+  intl: ^0.17.0
   awesome_notifications: ^0.0.6+10
   flutter_riverpod:
-  flutter_hooks: ^0.18.2 
+  flutter_hooks: ^0.18.2
 
 dev_dependencies:
   flutter_test:

@@ -1,5 +1,6 @@
 import 'package:chat_bot/application/chat/chat_state.dart';
 import 'package:chat_bot/application/chat/chat_state_notifier.dart';
+import 'package:chat_bot/core/models/reaction.dart';
 import 'package:chat_bot/presentation/chat/widgets/appbar_title.dart';
 import 'package:chat_bot/providers.dart';
 import 'package:flutter/material.dart';
@@ -64,18 +65,10 @@ class ChatScreen extends ConsumerWidget {
 
   List<Widget> getActions(ChatStateNotifier chatNotifier) {
     return [
-      IconButton(
-        onPressed: () {},
-        icon: Icon(Ionicons.thumbs_up),
-      ),
-      IconButton(
-        onPressed: () {},
-        icon: Icon(Ionicons.sad),
-      ),
-      IconButton(
-        onPressed: () {},
-        icon: Icon(Ionicons.heart),
-      ),
+      ...Reaction.reactions.map((reaction) => IconButton(
+            onPressed: () => chatNotifier.reactToMessage(reaction),
+            icon: Icon(Reaction.getReactionIcon(reaction)),
+          )),
       IconButton(
         onPressed: () => chatNotifier.reply(),
         icon: Icon(Ionicons.arrow_undo),

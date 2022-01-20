@@ -45,9 +45,12 @@ class ChatImplementation implements ChatRepository {
     _messageStream.add(message);
     Timer(Duration(seconds: _generateRandom(1, 2)), () {
       _messageStream.add(message.copyWith(readed: true));
-      _botStream.sink.add(_chatbot.copyWith(isTyping: true));
+      if (message.reaction == null)
+        _botStream.sink.add(_chatbot.copyWith(isTyping: true));
     });
-    _reply();
+    if (message.reaction == null) {
+      _reply();
+    }
   }
 
   void _reply() {
